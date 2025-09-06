@@ -1,15 +1,16 @@
+# pylama: ignore=W191
 from web import application
+from web.template import render
 
-urls = (
-    '/(.*)', 'hello'
-)
-app = application(urls, globals())
+URLS = ("/(.*)", "home")
+RENDER = render("templates")
 
-class hello:
-    def GET(self, name):
-        if not name:
-            name = 'World'
-        return 'Hello, ' + name + '!'
 
-if __name__ == "__main__":
-    app.run()
+class home:
+	def GET(self, name):
+		return RENDER.base(title="", head="", body=f"Hello, {name or 'World'}!")
+
+
+if "__main__" == __name__:
+	app = application(URLS, globals())
+	app.run()
